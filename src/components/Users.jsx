@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getUsers } from "../features/UsersReducer";
-import axios from "axios";
 import Post from "../CRUD/Post";
 import DeleteFile from "../CRUD/Delete";
+import Edit from "../CRUD/Edit";
 
 const Users = () => {
   const [post, setPost] = useState(false);
+  const [edit, setEdit] = useState({
+    id: null,
+    click: false,
+  });
   const [Delete, setDelete] = useState({
     id: null,
     click: false,
@@ -22,7 +26,10 @@ const Users = () => {
   return (
     <div>
       {post ? <Post /> : null}
-      {Delete?.click ? <DeleteFile id={Delete.id} setDelete={setDelete} /> : null}
+      {edit.click ? <Edit edit={edit} setEdit={setEdit} /> : null}
+      {Delete?.click ? (
+        <DeleteFile id={Delete.id} setDelete={setDelete} />
+      ) : null}
       <button
         onClick={() => {
           setPost(!post);
@@ -48,7 +55,17 @@ const Users = () => {
               <td>{name}</td>
               <td>{email}</td>
               <td>
-                <button className="w-[70px] rounded-[6px] bg-orange-600 text-white border-2 py-[3px]">Edit</button>
+                <button
+                  className="w-[70px] rounded-[6px] bg-orange-600 text-white border-2 py-[3px]"
+                  onClick={() => {
+                    setEdit({
+                      id: id,
+                      click: true,
+                    });
+                  }}
+                >
+                  Edit
+                </button>
                 <button
                   className="w-[70px] rounded-[6px] bg-red-700 text-white border-2 py-[3px]"
                   onClick={() => {

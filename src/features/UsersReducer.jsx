@@ -19,6 +19,12 @@ export const deleteUsers = createAsyncThunk("users/deleteUsers", async (id) => {
   axios.delete(`http://localhost:3000/users/${id}`);
 });
 
+export const putUsers = createAsyncThunk("users/putUsers", async (item) => {
+  console.log(item[1]);
+
+  return axios.put(`http://localhost:3000/users/${item}[0]`, item[1]);
+});
+
 const usersSlice = createSlice({
   name: "users",
 
